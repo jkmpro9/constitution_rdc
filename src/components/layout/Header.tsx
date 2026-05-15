@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, Search, X, MessageCircle, Star } from "lucide-react";
+import { Menu, Search, X, Github, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 
@@ -81,16 +81,16 @@ export default function Header({ onToggleAssistant, sidebarOpen, onToggleSidebar
             <Search className="h-5 w-5" />
           </button>
 
-          {/* Assistant IA */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggleAssistant}
-            className="hidden sm:flex items-center gap-1.5 text-rdc-blue-700"
+          {/* GitHub */}
+          <a
+            href="https://github.com/jkmpro9/constitution_rdc"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 text-rdc-blue-700 hover:text-rdc-blue-900 transition-colors h-9 rounded-md px-3 text-xs font-medium"
           >
-            <MessageCircle className="h-4 w-4" />
-            <span className="text-xs">Assistant</span>
-          </Button>
+            <Github className="h-4 w-4" />
+            <span className="text-xs">GitHub</span>
+          </a>
         </div>
       </div>
 
