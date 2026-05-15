@@ -15,12 +15,15 @@ import {
   ChevronRight,
   Gavel,
   ScrollText,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { PREAMBULE, PREAMBULE_SUMMARY } from "@/lib/preambule";
 
 export default function HomePage() {
   const [toc, setToc] = useState<Titre[] | null>(null);
+  const [showPreamble, setShowPreamble] = useState(false);
 
   useEffect(() => {
     getTitres()
@@ -147,20 +150,46 @@ export default function HomePage() {
           </h2>
           <div className="bg-rdc-blue-50/50 border border-rdc-blue-100 rounded-2xl p-6 md:p-8">
             <p className="text-sm md:text-base text-rdc-blue-900 leading-relaxed font-serif italic">
-              Nous, Peuple congolais,
-              <br />
-              Uni par le destin et par l&apos;histoire autour de nobles idéaux de
-              liberté, de fraternité, de solidarité, de justice, de paix et de
-              travail...
+              {PREAMBULE_SUMMARY}
             </p>
-            <Link
-              href="/articles/1"
+            <button
+              onClick={() => setShowPreamble(true)}
               className="inline-flex items-center gap-1 mt-4 text-xs font-medium text-rdc-blue-700 hover:text-rdc-blue-900 transition-colors"
             >
               Lire la suite
               <ChevronRight className="h-3 w-3" />
-            </Link>
+            </button>
           </div>
+
+          {/* Modale Préambule */}
+          {showPreamble && (
+            <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+              {/* Overlay */}
+              <div
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={() => setShowPreamble(false)}
+              />
+              {/* Contenu */}
+              <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-rdc-blue-100 animate-slide-up">
+                <div className="sticky top-0 bg-white z-10 flex items-center justify-between px-6 py-4 border-b border-rdc-blue-100 rounded-t-2xl">
+                  <h3 className="text-sm font-semibold text-rdc-blue-950 uppercase tracking-wider">
+                    Préambule
+                  </h3>
+                  <button
+                    onClick={() => setShowPreamble(false)}
+                    className="p-1.5 rounded-lg hover:bg-rdc-blue-50 transition-colors text-rdc-blue-500 hover:text-rdc-blue-700"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="px-6 py-6">
+                  <p className="text-sm md:text-base text-rdc-blue-900 leading-relaxed font-serif whitespace-pre-line">
+                    {PREAMBULE}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

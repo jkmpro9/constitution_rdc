@@ -172,13 +172,12 @@ export default function ArticlePage() {
   }
 
   return (
-    <>
+    <div className="max-w-5xl mx-auto">
       <SEOHead
         title={`Article ${article.numero}${article.titre ? ` — ${article.titre.nom}` : ""} | Constitution RDC`}
-        description={(article.contenu.replace(/\s+/g, " ").trim().length > 160 ? article.contenu.replace(/\s+/g, " ").trim().slice(0, 157) + "..." : article.contenu.replace(/\s+/g, " ").trim()) || "Article de la Constitution de la RDC"}
+        description="Article de la Constitution de la République Démocratique du Congo"
         ogImage="/favicon.svg"
       />
-      <div className="max-w-5xl mx-auto">
       {/* Fil d'Ariane complet et cliquable */}
       <div className="px-4 sm:px-6 pt-6 pb-0">
         <nav className="flex items-center gap-1 text-xs text-rdc-blue-500 mb-4 flex-wrap">
@@ -464,6 +463,6 @@ export default function ArticlePage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
