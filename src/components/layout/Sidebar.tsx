@@ -8,7 +8,11 @@ import { cn } from "@/lib/utils";
 import { getTitres, romanNumeral } from "@/lib/constitution";
 import type { Titre, Chapitre, Section, Article } from "@/lib/constitution";
 
-export default function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export default function Sidebar({ onClose }: SidebarProps) {
   const [toc, setToc] = useState<Titre[] | null>(null);
   const pathname = usePathname();
   const [expandedTitres, setExpandedTitres] = useState<Set<number>>(
@@ -173,6 +177,7 @@ export default function Sidebar() {
                             <Link
                               key={article.numero}
                               href={`/articles/${article.numero}`}
+                              onClick={onClose}
                               className={cn(
                                 "flex items-center gap-2 pl-4 pr-2 py-1 text-xs transition-colors",
                                 isArticleActive(article.numero)
@@ -197,6 +202,7 @@ export default function Sidebar() {
                                 <Link
                                   key={article.numero}
                                   href={`/articles/${article.numero}`}
+                                  onClick={onClose}
                                   className={cn(
                                     "flex items-center gap-2 pl-6 pr-2 py-1 text-xs transition-colors",
                                     isArticleActive(article.numero)
