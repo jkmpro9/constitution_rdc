@@ -28,6 +28,20 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# virtual env
+.venv/
+
+# python cache
+__pycache__/
+*.pyc
+
+# data sources (raw PDFs, scrapes — not for deployment)
+data/
+scripts/
+
+# temp
+tsx/
+
 # vercel
 .vercel
 

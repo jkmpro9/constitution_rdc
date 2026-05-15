@@ -1,0 +1,1 @@
+/home/jay/constitution-rdc/node_modules/convex/node_modules/.bin/tsx
