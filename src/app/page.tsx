@@ -355,6 +355,33 @@ export default function HomePage() {
           <div className="flex-1 bg-rdc-red-500" />
         </div>
       </section>
+
+      {/* Footer / Copyright */}
+      <footer className="border-t border-rdc-blue-100 bg-rdc-blue-50/30">
+        <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-xs text-rdc-blue-500">
+            &copy; 2026 — Développé par{" "}
+            <a
+              href="https://coccinelledrc.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-rdc-blue-700 hover:text-rdc-blue-900 underline underline-offset-2 transition-colors"
+            >
+              Jeancy Mungedi
+            </a>{" "}
+            — COCCINELLE SARL
+          </p>
+          <p className="text-[10px] text-rdc-blue-400">
+            Constitution de la République Démocratique du Congo — Libre et accessible à tous
+          </p>
+        </div>
+        {/* Mini bandeau drapeau */}
+        <div className="h-1 w-full flex">
+          <div className="flex-1 bg-rdc-blue-700" />
+          <div className="flex-1 bg-rdc-yellow-500" />
+          <div className="flex-1 bg-rdc-red-500" />
+        </div>
+      </footer>
     </div>
   );
 }
