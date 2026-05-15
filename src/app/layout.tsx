@@ -63,6 +63,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        {/* OpenGraph / Twitter / Meta sociaux — injectés côté serveur pour les crawlers */}
+        <meta property="og:title" content="Constitution de la RDC" />
+        <meta property="og:description" content="La Constitution de la République Démocratique du Congo, accessible à tous." />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="Constitution RDC" />
+        <meta property="og:url" content="https://constitution-rdc.cd" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Constitution de la RDC" />
+        <meta name="twitter:description" content="La Constitution de la République Démocratique du Congo, accessible à tous." />
+      </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ClientLayout>{children}</ClientLayout>
       </body>
