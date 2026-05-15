@@ -1,0 +1,8 @@
+[phases.install]
+cmds = ["npm ci --prefer-offline"]
+
+[phases.build]
+cmds = ["rm -rf /app/.next/cache/* 2>/dev/null; npm run build"]
+
+[build]
+disableCache = true

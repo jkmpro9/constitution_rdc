@@ -347,7 +347,7 @@ export default function ArticlePage() {
               )}
             </header>
 
-            <div className="prose prose-blue prose-sm md:prose-base text-rdc-blue-900 font-serif max-w-none">
+            <div className="prose prose-blue prose-sm md:prose-base text-rdc-blue-900 font-serif max-w-none text-justify md:text-[1.05rem]">
               {(() => {
                 const text = article.contenu;
                 
@@ -394,11 +394,11 @@ export default function ArticlePage() {
                 
                 return (
                   <>
-                    {intro && <p className="mb-3">{intro}</p>}
+                    {intro && <p className="mb-3 text-justify leading-relaxed md:text-lg">{intro}</p>}
                     {groups.map((items, gi) => (
                       <ol key={gi} className="list-none pl-0 space-y-2 mb-4 last:mb-0">
                         {items.map((item, ii) => (
-                          <li key={ii} className="flex gap-2 leading-relaxed text-sm md:text-base">
+                          <li key={ii} className="flex gap-2 leading-relaxed text-justify text-base md:text-lg">
                             <span className="font-semibold text-rdc-blue-700 shrink-0 min-w-[1.5rem] text-right select-none">
                               {ii + 1}.
                             </span>
