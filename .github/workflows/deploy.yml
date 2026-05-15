@@ -1,0 +1,13 @@
+name: Deploy to Easypanel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Easypanel deployment
+        run: |
+          curl -X POST "http://95.111.227.243:3000/api/deploy/8562d6777062cdf17b8ad78bebd8c0d1b58417755c6f4d88"
