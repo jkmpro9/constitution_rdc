@@ -342,21 +342,69 @@ export default function ArticlePage() {
               )}
             </header>
 
-            <div className="text-sm md:text-base text-rdc-blue-900 leading-relaxed space-y-3 font-serif">
-              {article.contenu.split(/(\d+[°.]\s*)/).map((part, i) => {
-                const listMatch = part.match(/^(\d+)[°.]\s*/);
-                if (listMatch) {
-                  return (
-                    <p key={i} className="pl-6 -indent-4">
-                      <span className="font-semibold text-rdc-blue-700">
-                        {listMatch[0]}
-                      </span>
-                      {part.slice(listMatch[0].length)}
-                    </p>
-                  );
+            <div className="prose prose-blue prose-sm md:prose-base text-rdc-blue-900 font-serif max-w-none">
+              {(() => {
+                const text = article.contenu;
+                
+                // Repère les items de liste: nombre + . ou ° précédé d'espace ou début
+                const pattern = /(?:(?<=[\s])|(?<=^))(\d+)[°.]\s*/g;
+                const matches: { index: number; num: string; end: number }[] = [];
+                let m;
+                while ((m = pattern.exec(text)) !== null) {
+                  matches.push({ index: m.index, num: m[1], end: m.index + m[0].length });
                 }
-                return <p key={i}>{part}</p>;
-              })}
+                
+                if (matches.length < 2) {
+                  return <p>{text}</p>;
+                }
+                
+                // Intro = tout avant le premier match
+                const intro = text.slice(0, matches[0].index).trim();
+                
+                // Détecter les groupes de listes (resets de numérotation)
+                const groupBounds: { startIdx: number; endIdx: number }[] = [];
+                let gStart = 0;
+                let prevNum = parseInt(matches[0].num);
+                for (let i = 1; i < matches.length; i++) {
+                  const curr = parseInt(matches[i].num);
+                  if (curr <= prevNum && prevNum > 1) {
+                    groupBounds.push({ startIdx: gStart, endIdx: i });
+                    gStart = i;
+                  }
+                  prevNum = curr;
+                }
+                groupBounds.push({ startIdx: gStart, endIdx: matches.length });
+                
+                // Extraire les items pour chaque groupe
+                const groups = groupBounds.map(({ startIdx, endIdx }) => {
+                  const items: string[] = [];
+                  for (let i = startIdx; i < endIdx; i++) {
+                    const contentStart = matches[i].end;
+                    const contentEnd = i < endIdx - 1 ? matches[i + 1].index : text.length;
+                    const itemText = text.slice(contentStart, contentEnd).trim().replace(/[;:]\s*$/, '');
+                    items.push(itemText);
+                  }
+                  return items;
+                });
+                
+                return (
+                  <>
+                    {intro && <p className="mb-3">{intro}</p>}
+                    {groups.map((items, gi) => (
+                      <ol key={gi} className="list-none pl-0 space-y-2 mb-4 last:mb-0">
+                        {items.map((item, ii) => (
+                          <li key={ii} className="flex gap-2 leading-relaxed text-sm md:text-base">
+                            <span className="font-semibold text-rdc-blue-700 shrink-0 min-w-[1.5rem] text-right select-none">
+                              {ii + 1}.
+                            </span>
+                            <span className="text-rdc-blue-900">{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    ))}
+                  </>
+                );
+              })()}
             </div>
           </div>
 
