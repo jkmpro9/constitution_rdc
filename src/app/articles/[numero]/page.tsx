@@ -175,10 +175,7 @@ export default function ArticlePage() {
     <>
       <SEOHead
         title={`Article ${article.numero}${article.titre ? ` — ${article.titre.nom}` : ""} | Constitution RDC`}
-        description={(() => {
-          const clean = article.contenu.replace(/\s+/g, " ").trim();
-          return clean.length > 160 ? clean.slice(0, clean.lastIndexOf(" ", 157)) + "..." : clean;
-        })()}
+        description={(article.contenu.replace(/\s+/g, " ").trim().length > 160 ? article.contenu.replace(/\s+/g, " ").trim().slice(0, 157) + "..." : article.contenu.replace(/\s+/g, " ").trim()) || "Article de la Constitution de la RDC"}
         ogImage="/favicon.svg"
       />
       <div className="max-w-5xl mx-auto">
