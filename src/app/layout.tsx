@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Constitution RDC",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
     apple: "/favicon.svg",
   },
   robots: {
