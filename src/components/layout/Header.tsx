@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, Search, X, Github, Star } from "lucide-react";
+import { Menu, Search, X, GitBranch, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 
@@ -88,7 +88,7 @@ export default function Header({ onToggleAssistant, sidebarOpen, onToggleSidebar
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-1.5 text-rdc-blue-700 hover:text-rdc-blue-900 transition-colors h-9 rounded-md px-3 text-xs font-medium"
           >
-            <Github className="h-4 w-4" />
+            <GitBranch className="h-4 w-4" />
             <span className="text-xs">GitHub</span>
           </a>
         </div>
