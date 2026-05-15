@@ -77,6 +77,8 @@ export default function RootLayout({
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Constitution de la RDC" />
         <meta name="twitter:description" content="La Constitution de la République Démocratique du Congo, accessible à tous." />
+        {/* Umami Analytics */}
+        <script defer src="https://apps-umami.fpys2z.easypanel.host/script.js" data-website-id="91d09627-b5eb-41d5-a64e-b05dcd28c37a"></script>
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ClientLayout>{children}</ClientLayout>
