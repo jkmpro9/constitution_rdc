@@ -358,7 +358,7 @@ export default function HomePage() {
 
       {/* Footer / Copyright */}
       <footer className="border-t border-rdc-blue-100 bg-rdc-blue-50/30">
-        <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
           <p className="text-xs text-rdc-blue-500">
             &copy; 2026 — Développé par{" "}
             <a
