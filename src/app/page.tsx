@@ -19,11 +19,16 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { PREAMBULE, PREAMBULE_SUMMARY } from "@/lib/preambule";
+import { PREAMBULE, getPreambleSummary } from "@/lib/preambule";
 
 export default function HomePage() {
   const [toc, setToc] = useState<Titre[] | null>(null);
   const [showPreamble, setShowPreamble] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
   useEffect(() => {
     getTitres()
@@ -150,7 +155,7 @@ export default function HomePage() {
           </h2>
           <div className="bg-rdc-blue-50/50 border border-rdc-blue-100 rounded-2xl p-6 md:p-8">
             <p className="text-sm md:text-base text-rdc-blue-900 leading-relaxed font-serif italic">
-              {PREAMBULE_SUMMARY}
+              {ready ? getPreambleSummary() : ""}
             </p>
             <button
               onClick={() => setShowPreamble(true)}

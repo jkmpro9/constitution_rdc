@@ -1,4 +1,4 @@
-const PREAMBULE = `Nous, Peuple congolais,
+export const PREAMBULE = `Nous, Peuple congolais,
 Unis par le destin et par l'histoire autour de nobles idéaux de liberté, de fraternité, de solidarité, de justice, de paix et de travail ;
 
 Soucieux de bâtir, au coeur de l'Afrique, un Etat de droit et une Nation forte et prospère, fondée sur la raison politique, l'équilibre ethnique, l'égalité des chances et la garantie de la sécurité collective et individuelle ;
@@ -17,6 +17,10 @@ Conscients de l'impérieuse nécessité de reconstruire l'Etat sur des bases con
 
 Fermement engagés à défendre la souveraineté nationale, l'intégrité territoriale et l'indépendance de la République ;
 
-Adoptons librement et solennellement la présente Constitution.`;
+Adoptons librement et solennellement la présente Constitution.`
 
-const PREAMBULE_SUMMARY = PREAMBULE.slice(0, 200).split(" ").slice(0, -1).join(" ") + "...";
+export const getPreambleSummary = () => {
+  const words = PREAMBULE.split(" ");
+  const truncated = words.slice(0, 30).join(" ");
+  return truncated + "...";
+}
