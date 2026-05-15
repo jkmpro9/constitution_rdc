@@ -71,7 +71,10 @@ export default function RootLayout({
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="Constitution RDC" />
         <meta property="og:url" content="https://constitution-rdc.cd" />
-        <meta name="twitter:card" content="summary" />
+        <meta property="og:image" content="https://constitution-rdc.cd/og-image.svg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Constitution de la RDC" />
         <meta name="twitter:description" content="La Constitution de la République Démocratique du Congo, accessible à tous." />
       </head>

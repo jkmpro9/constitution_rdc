@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0048a8"/>
+      <stop offset="100%" stop-color="#002d6e"/>
+    </linearGradient>
+  </defs>
+  <!-- Fond bleu -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Bande drapeau haut -->
+  <rect y="0" width="1200" height="6" fill="#e8b800"/>
+  <rect y="6" width="1200" height="3" fill="#ce1020"/>
+  <!-- Bande drapeau bas -->
+  <rect y="621" width="1200" height="6" fill="#e8b800"/>
+  <rect y="627" width="1200" height="3" fill="#ce1020"/>
+  <!-- Étoile centrale -->
+  <polygon points="600,140 640,260 770,260 668,340 700,460 600,380 500,460 532,340 430,260 560,260" fill="#e8b800" transform="scale(1.4) translate(-257,-100)"/>
+  <!-- Livre ouvert -->
+  <path d="M470 490 V590 M730 490 V590" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M420 470 a12 12 0 0 0 -12 -12 h-20 a70 70 0 0 0 -70 70 v100 a70 70 0 0 0 70 70 h48 a48 48 0 0 0 48 -48 V518 a48 48 0 0 0 -48 -48 z" fill="none" stroke="#fff" stroke-width="6"/>
+  <path d="M780 470 a12 12 0 0 1 12 -12 h20 a70 70 0 0 1 70 70 v100 a70 70 0 0 1 -70 70 h-48 a48 48 0 0 1 -48 -48 V518 a48 48 0 0 1 48 -48 z" fill="none" stroke="#fff" stroke-width="6"/>
+  <!-- Texte -->
+  <text x="600" y="400" font-family="sans-serif" font-size="52" font-weight="bold" fill="#fff" text-anchor="middle">Constitution de la RDC</text>
+  <text x="600" y="450" font-family="sans-serif" font-size="22" fill="#e8b800" text-anchor="middle">République Démocratique du Congo</text>
+  <text x="600" y="510" font-family="sans-serif" font-size="16" fill="#ffffff99" text-anchor="middle">constitution-rdc.cd</text>
+</svg>
