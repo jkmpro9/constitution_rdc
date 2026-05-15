@@ -1,7 +1,9 @@
 "use client";
 
+import SEOHead from "@/components/seo-head";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import SEOHead from "@/components/seo-head";
 import {
   BookOpen,
   ScrollText,
@@ -9,6 +11,7 @@ import {
   ArrowRight,
   ChevronRight,
 } from "lucide-react";
+import SEOHead from "@/components/seo-head";
 import { getTitres, romanNumeral } from "@/lib/constitution";
 import type { Titre } from "@/lib/constitution";
 
@@ -20,6 +23,10 @@ export default function SectionsPage() {
   }, []);
 
   return (
+      <SEOHead
+        title="Constitution de la RDC"
+        description="Consultez la Constitution de la République Démocratique du Congo. Navigation par titres, chapitres et articles."
+      />
     <div className="max-w-4xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="mb-8">
@@ -117,6 +124,10 @@ export default function SectionsPage() {
             );
 
             return (
+      <SEOHead
+        title="Constitution de la RDC"
+        description="Consultez la Constitution de la République Démocratique du Congo. Navigation par titres, chapitres et articles."
+      />
               <Link
                 key={titre.numero}
                 href={`/titres/${titre.numero}`}

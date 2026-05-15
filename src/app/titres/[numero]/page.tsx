@@ -1,8 +1,8 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import SEOHead from "@/components/seo-head";
 import {
   ChevronLeft,
   BookOpen,

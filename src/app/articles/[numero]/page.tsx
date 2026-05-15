@@ -1,9 +1,9 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { getData, romanNumeral } from "@/lib/constitution";
 import type { Article, Titre, Chapitre, Section } from "@/lib/constitution";
 import { useParams } from "next/navigation";
+import SEOHead from "@/components/seo-head";
 import Link from "next/link";
 import {
   ChevronLeft,
@@ -172,7 +172,16 @@ export default function ArticlePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <>
+      <SEOHead
+        title={`Article ${article.numero}${article.titre ? ` — ${article.titre.nom}` : ""} | Constitution RDC`}
+        description={(() => {
+          const clean = article.contenu.replace(/\s+/g, " ").trim();
+          return clean.length > 160 ? clean.slice(0, clean.lastIndexOf(" ", 157)) + "..." : clean;
+        })()}
+        ogImage="/favicon.svg"
+      />
+      <div className="max-w-5xl mx-auto">
       {/* Fil d'Ariane complet et cliquable */}
       <div className="px-4 sm:px-6 pt-6 pb-0">
         <nav className="flex items-center gap-1 text-xs text-rdc-blue-500 mb-4 flex-wrap">
@@ -458,6 +467,6 @@ export default function ArticlePage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

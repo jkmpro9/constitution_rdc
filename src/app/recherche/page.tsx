@@ -1,7 +1,9 @@
 "use client";
 
+import SEOHead from "@/components/seo-head";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import SEOHead from "@/components/seo-head";
 import {
   Search,
   FileText,
@@ -11,7 +13,9 @@ import {
   List,
   TrendingUp,
 } from "lucide-react";
+import SEOHead from "@/components/seo-head";
 import { useState, useMemo, Suspense, useEffect, useCallback } from "react";
+import SEOHead from "@/components/seo-head";
 import { searchArticles, getTitres, getArticle } from "@/lib/constitution";
 import type { SearchResult, Titre, Article } from "@/lib/constitution";
 
@@ -170,6 +174,10 @@ function SearchContent() {
   const hasDirectMatch = results.some((r) => r.type === "article" || r.type === "titre");
 
   return (
+      <SEOHead
+        title="Constitution de la RDC"
+        description="Consultez la Constitution de la République Démocratique du Congo. Navigation par titres, chapitres et articles."
+      />
     <div className="max-w-3xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="mb-8">
@@ -273,6 +281,10 @@ function SearchContent() {
                 {filteredResults.map((entry, idx) => {
                   if (entry.type === "article") {
                     return (
+      <SEOHead
+        title="Constitution de la RDC"
+        description="Consultez la Constitution de la République Démocratique du Congo. Navigation par titres, chapitres et articles."
+      />
                       <Link
                         key={`article-${entry.numero}`}
                         href={`/articles/${entry.numero}`}
@@ -306,6 +318,10 @@ function SearchContent() {
                     );
 
                     return (
+      <SEOHead
+        title="Constitution de la RDC"
+        description="Consultez la Constitution de la République Démocratique du Congo. Navigation par titres, chapitres et articles."
+      />
                       <Link
                         key={`titre-${entry.numero}`}
                         href={`/titres/${entry.numero}`}
@@ -335,6 +351,10 @@ function SearchContent() {
 
                   if (entry.type === "keyword" && entry.article) {
                     return (
+      <SEOHead
+        title="Constitution de la RDC"
+        description="Consultez la Constitution de la République Démocratique du Congo. Navigation par titres, chapitres et articles."
+      />
                       <Link
                         key={`kw-${entry.article.numero}-${idx}`}
                         href={`/articles/${entry.article.numero}`}
@@ -508,6 +528,10 @@ function escapeRegex(str: string) {
 
 export default function SearchPage() {
   return (
+      <SEOHead
+        title="Constitution de la RDC"
+        description="Consultez la Constitution de la République Démocratique du Congo. Navigation par titres, chapitres et articles."
+      />
     <Suspense
       fallback={
         <div className="max-w-3xl mx-auto px-6 py-20 animate-pulse">
