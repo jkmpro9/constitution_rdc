@@ -1,96 +1,93 @@
-// Service Worker — PWA hors-ligne pour Constitution RDC
-// Cache-first pour les assets statiques, network-first pour les articles
+// Service Worker — PWA hors-ligne complet pour Constitution RDC
+// Cache-first pour TOUT : assets, articles, sections, titres
 
-const CACHE_NAME = "constitution-rdc-v1";
+const CACHE_NAME = "constitution-rdc-v2";
 const STATIC_ASSETS = [
   "/",
   "/sections",
+  "/recherche",
   "/favicon.ico",
   "/favicon.svg",
   "/manifest.json",
   "/data.json",
+  "/icons/icon-192.svg",
+  "/icons/icon-512.svg",
 ];
 
-// Installation : précache les assets statiques
+// Générer toutes les routes d'articles (1-229) et de titres (1-8)
+const ARTICLE_ROUTES = Array.from({ length: 229 }, (_, i) => `/articles/${i + 1}`);
+const TITRE_ROUTES = Array.from({ length: 8 }, (_, i) => `/titres/${i + 1}`);
+
+const ALL_ROUTES = [...STATIC_ASSETS, ...ARTICLE_ROUTES, ...TITRE_ROUTES];
+
+// Installation : précache TOUT le site
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
-    })
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      // Précacher les assets statiques d'abord
+      await cache.addAll(STATIC_ASSETS);
+      // Puis les pages une par une (évite de bloquer le navigateur)
+      for (const route of [...ARTICLE_ROUTES, ...TITRE_ROUTES]) {
+        try {
+          await cache.add(new Request(route, { mode: "same-origin" }));
+        } catch {
+          // Ignorer les pages qui renvoient une erreur
+        }
+      }
+    })()
   );
   self.skipWaiting();
 });
 
-// Activation : nettoie les anciens caches
+// Activation : nettoie l'ancien cache
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
+    caches.keys().then((keys) =>
+      Promise.all(
         keys
           .filter((key) => key !== CACHE_NAME)
           .map((key) => caches.delete(key))
-      );
-    })
+      )
+    )
   );
   self.clients.claim();
 });
 
-// Interception des requêtes
+// Interception : cache-first pour tout
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Ne pas intercepter les requêtes vers l'API DeepSeek
+  // Ne pas intercepter les appels API
   if (url.pathname.startsWith("/api/")) {
     event.respondWith(fetch(request));
     return;
   }
 
-  // Pages de navigation (HTML) : network-first, fallback cache
-  if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          // Mettre en cache la réponse pour plus tard
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
-        })
-        .catch(() => {
-          return caches.match(request).then((cached) => {
-            return (
-              cached ||
-              caches.match("/") // fallback vers l'accueil
-            );
-          });
-        })
-    );
-    return;
-  }
+  // Cache-first : sert le cache d'abord, met à jour en arrière-plan si réseau dispo
+  event.respondWith(
+    (async () => {
+      const cached = await caches.match(request);
+      if (cached) return cached;
 
-  // Assets statiques (JS, CSS, images, data.json) : cache-first
-  if (
-    url.pathname.startsWith("/_next/") ||
-    url.pathname.endsWith(".json") ||
-    url.pathname.endsWith(".ico") ||
-    url.pathname.endsWith(".svg") ||
-    url.pathname.endsWith(".png") ||
-    url.pathname.endsWith(".css") ||
-    url.pathname.endsWith(".js")
-  ) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        const fetchPromise = fetch(request).then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
-        });
-        return cached || fetchPromise;
-      })
-    );
-    return;
-  }
-
-  // Tout le reste : réseau normal
-  event.respondWith(fetch(request));
+      try {
+        const response = await fetch(request);
+        if (response.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(request, response.clone());
+        }
+        return response;
+      } catch {
+        // Hors-ligne : retourner l'accueil comme fallback
+        const fallback = await caches.match("/");
+        return (
+          fallback ||
+          new Response("Vous êtes hors-ligne. Revenez plus tard.", {
+            status: 503,
+          })
+        );
+      }
+    })()
+  );
 });
