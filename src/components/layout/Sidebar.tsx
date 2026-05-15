@@ -147,6 +147,34 @@ export default function Sidebar({ onClose }: SidebarProps) {
                   const chArticles = chapitre.articles;
                   const chSections = chapitre.sections;
 
+                  // Cacher le nom "(sans chapitre)" et afficher les articles directement
+                  const isUnnamed = chapitre.nom === "(sans chapitre)";
+
+                  if (isUnnamed) {
+                    return (
+                      <div key={chKey} className="ml-2">
+                        {chArticles.map((article) => (
+                          <Link
+                            key={article.numero}
+                            href={`/articles/${article.numero}`}
+                            onClick={onClose}
+                            className={cn(
+                              "flex items-center gap-2 pl-4 pr-2 py-1 text-xs transition-colors",
+                              isArticleActive(article.numero)
+                                ? "bg-rdc-blue-100 text-rdc-blue-900 font-medium border-l-2 border-rdc-blue-500"
+                                : "text-rdc-blue-600 hover:text-rdc-blue-800 hover:bg-rdc-blue-50"
+                            )}
+                          >
+                            <FileText className="h-3 w-3 shrink-0" />
+                            <span className="truncate">
+                              Art. {article.numero}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    );
+                  }
+
                   return (
                     <div key={chKey}>
                       <button
