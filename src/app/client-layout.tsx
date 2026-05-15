@@ -10,7 +10,20 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js");
+      navigator.serviceWorker.register("/sw.js").then((reg) => {
+        // Vérifier les mises à jour à chaque navigation
+        reg.addEventListener("updatefound", () => {
+          const newWorker = reg.installing;
+          if (newWorker) {
+            newWorker.addEventListener("statechange", () => {
+              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                // Nouveau SW installé — on recharge pour l'activer
+                window.location.reload();
+              }
+            });
+          }
+        });
+      });
     }
   }, []);
 

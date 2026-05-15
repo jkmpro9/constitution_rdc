@@ -1,7 +1,7 @@
 // Service Worker — PWA hors-ligne complet pour Constitution RDC
-// Cache-first pour TOUT : assets, articles, sections, titres
+// Network-first : sert la version la plus récente, cache en fallback
 
-const CACHE_NAME = "constitution-rdc-v2";
+const CACHE_NAME = "constitution-rdc-v3";
 const STATIC_ASSETS = [
   "/",
   "/sections",
@@ -40,21 +40,24 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
-// Activation : nettoie l'ancien cache
+// Activation : nettoie l'ancien cache et prend le contrôle immédiatement
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
-      )
-    )
+    Promise.all([
+      caches.keys().then((keys) =>
+        Promise.all(
+          keys
+            .filter((key) => key !== CACHE_NAME)
+            .map((key) => caches.delete(key))
+        )
+      ),
+      // Prendre le contrôle de tous les clients (onglets) ouverts
+      self.clients.claim(),
+    ])
   );
-  self.clients.claim();
 });
 
-// Interception : cache-first pour tout
+// Interception : network-first — va sur le réseau, cache en arrière-plan
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -65,12 +68,15 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Cache-first : sert le cache d'abord, met à jour en arrière-plan si réseau dispo
+  // Ignorer les requêtes non-GET
+  if (request.method !== "GET") {
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // Network-first : va sur le réseau d'abord
   event.respondWith(
     (async () => {
-      const cached = await caches.match(request);
-      if (cached) return cached;
-
       try {
         const response = await fetch(request);
         if (response.ok) {
@@ -79,7 +85,10 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       } catch {
-        // Hors-ligne : retourner l'accueil comme fallback
+        // Hors-ligne : utilise le cache
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        // Fallback ultime
         const fallback = await caches.match("/");
         return (
           fallback ||
