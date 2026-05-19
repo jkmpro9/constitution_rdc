@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
           {
             message: {
               role: "assistant",
-              content: `Désolé, l'assistant IA n'est pas encore configuré. Pour utiliser DeepSeek, ajoute \`DEEPSEEK_API_KEY\` dans le fichier \`.env.local\`.
+              content: `😔 Désolé, l'assistant n'est pas disponible pour l'instant en raison de la forte demande. Prière de revenir plus tard.
 
 Tu peux toujours naviguer dans la Constitution via :
 - 📖 **Lire les titres** : https://constitution-rdc.taild81b7e.ts.net/sections
@@ -77,7 +77,7 @@ Tu peux toujours naviguer dans la Constitution via :
               message: {
                 role: "assistant",
                 content:
-                  "Désolé, l'assistant rencontre une erreur technique. Réessaie plus tard.",
+                  "😔 Désolé, l'assistant n'est pas disponible pour l'instant en raison de la forte demande. Prière de revenir plus tard.",
               },
             },
           ],
@@ -97,7 +97,7 @@ Tu peux toujours naviguer dans la Constitution via :
             message: {
               role: "assistant",
               content:
-                "Désolé, une erreur s'est produite. Vérifie que ta clé API DeepSeek est correcte.",
+                "😔 Désolé, l'assistant n'est pas disponible pour l'instant en raison de la forte demande. Prière de revenir plus tard.",
             },
           },
         ],
