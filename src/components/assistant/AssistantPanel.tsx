@@ -146,7 +146,7 @@ export default function AssistantPanel({
                 <span className="text-sm font-semibold block leading-tight">
                   Assistant Constitution
                 </span>
-                <span className="text-[10px] text-white/70">DeepSeek IA</span>
+                <span className="text-[10px] text-white/70">Assistant Constitution</span>
               </div>
             </div>
             <button
