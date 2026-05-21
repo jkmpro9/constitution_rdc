@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
         Authorization: `Bearer ${OLLAMA_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-oss:20b",
+        model: "deepseek-v4-flash:cloud",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...messages.slice(-10), // garder les 10 derniers messages
