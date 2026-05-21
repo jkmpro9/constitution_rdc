@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
-const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
+const OLLAMA_API_KEY = "7cd43d6cdb4849c5b139fe0bf830d9ed.177oYbFG8GgjSb-9qpS19YVE";
+const OLLAMA_API_URL = "https://ollama.com/v1/chat/completions";
 
 const SYSTEM_PROMPT = `Tu es un assistant spécialisé dans la Constitution de la République Démocratique du Congo.
 
@@ -29,35 +29,14 @@ export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
 
-    if (!DEEPSEEK_API_KEY) {
-      // Mode fallback : réponse simple sans API
-      const userMessage = messages[messages.length - 1]?.content || "";
-      return NextResponse.json({
-        choices: [
-          {
-            message: {
-              role: "assistant",
-              content: `😔 Désolé, l'assistant n'est pas disponible pour l'instant en raison de la forte demande. Prière de revenir plus tard.
-
-Tu peux toujours naviguer dans la Constitution via :
-- 📖 **Lire les titres** : https://constitution-rdc.taild81b7e.ts.net/sections
-- 🔍 **Rechercher** : https://constitution-rdc.taild81b7e.ts.net/recherche
-
-*Message reçu : "${userMessage.substring(0, 100)}"`,
-            },
-          },
-        ],
-      });
-    }
-
-    const response = await fetch(DEEPSEEK_API_URL, {
+    const response = await fetch(OLLAMA_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+        Authorization: `Bearer ${OLLAMA_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "deepseek-chat",
+        model: "gpt-oss:20b",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...messages.slice(-10), // garder les 10 derniers messages
@@ -69,7 +48,7 @@ Tu peux toujours naviguer dans la Constitution via :
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("DeepSeek API error:", response.status, errorText);
+      console.error("Ollama Cloud API error:", response.status, errorText);
       return NextResponse.json(
         {
           choices: [
@@ -77,7 +56,7 @@ Tu peux toujours naviguer dans la Constitution via :
               message: {
                 role: "assistant",
                 content:
-                  "😔 Désolé, l'assistant n'est pas disponible pour l'instant en raison de la forte demande. Prière de revenir plus tard.",
+                  "😔 Désolé, l'assistant n'est pas disponible pour l'instant. Prière de revenir plus tard.",
               },
             },
           ],
@@ -97,7 +76,7 @@ Tu peux toujours naviguer dans la Constitution via :
             message: {
               role: "assistant",
               content:
-                "😔 Désolé, l'assistant n'est pas disponible pour l'instant en raison de la forte demande. Prière de revenir plus tard.",
+                "😔 Désolé, l'assistant n'est pas disponible pour l'instant. Prière de revenir plus tard.",
             },
           },
         ],
