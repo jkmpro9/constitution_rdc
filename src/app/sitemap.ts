@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const data = getConstitutionData();
-  const baseUrl = "https://constitution-rdc.jkmpro.com"; // À changer quand le domaine est prêt
+  const baseUrl = "https://constitution-rdc.cd";
 
   const entries: MetadataRoute.Sitemap = [
     {
