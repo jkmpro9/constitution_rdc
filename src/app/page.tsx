@@ -102,7 +102,7 @@ export default function HomePage() {
         <div className="absolute -right-24 top-10 h-72 w-72 rounded-full border border-white/10 bg-white/5" />
         <div className="absolute -bottom-36 -left-20 h-80 w-80 rounded-full border border-rdc-yellow-400/20 bg-rdc-yellow-400/5" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1.1fr_0.9fr] md:py-24">
-          <div>
+          <div className="text-center md:text-left">
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80">
               <span className="h-2 w-2 rounded-full bg-rdc-yellow-400" />
               Portail citoyen de la RDC
@@ -111,11 +111,11 @@ export default function HomePage() {
               Comprendre la Constitution
               <span className="block text-rdc-yellow-400">de la RDC.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg">
+            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/75 md:mx-0 md:text-lg">
               Le texte officiel, les articles et les explications pour connaître
               ses droits et comprendre les institutions de la République.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:justify-start">
               <Link href="/sections">
                 <Button size="lg" className="w-full gap-2 bg-rdc-yellow-500 font-semibold text-rdc-blue-950 shadow-lg shadow-rdc-yellow-500/25 hover:bg-rdc-yellow-400 sm:w-auto">
                   <BookOpen className="h-5 w-5" /> Lire la Constitution
@@ -128,7 +128,7 @@ export default function HomePage() {
                 </Button>
               </Link>
             </div>
-            <p className="mt-5 text-xs text-white/55">Libre et gratuit · Version modifiée par la Loi n° 11/002 du 20 janvier 2011</p>
+            <p className="mx-auto mt-5 max-w-sm text-xs text-white/55 md:mx-0">Libre et gratuit · Version modifiée par la Loi n° 11/002 du 20 janvier 2011</p>
           </div>
           <div className="relative hidden md:block">
             <div className="relative mx-auto max-w-sm rotate-2 rounded-2xl border border-white/20 bg-[#f7f2e8] p-5 shadow-2xl">
