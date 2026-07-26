@@ -181,13 +181,17 @@ export default function ArticlePage() {
       {/* Fil d'Ariane complet et cliquable */}
       <div className="px-4 pt-6 pb-0 sm:px-6">
         <nav className="mb-4 flex items-center gap-1 text-xs text-rdc-blue-500">
+          <span className="sm:hidden text-rdc-blue-950 font-medium">
+            Titre {article.titre ? romanNumeral(article.titre.numero) : ""} · Article {article.numero}
+          </span>
           <Link
             href="/"
-            className="hover:text-rdc-blue-700 transition-colors inline-flex items-center gap-1 shrink-0"
+            className="hidden items-center gap-1 transition-colors hover:text-rdc-blue-700 sm:inline-flex"
           >
             <BookOpen className="h-3 w-3" />
             Accueil
           </Link>
+          <div className="hidden sm:contents">
           {article.titre && (
             <>
               <ChevronRight className="h-3 w-3 text-rdc-blue-300 shrink-0" />
@@ -222,6 +226,7 @@ export default function ArticlePage() {
           <span className="text-rdc-blue-950 font-medium shrink-0">
             Article {article.numero}
           </span>
+          </div>
         </nav>
 
         {/* Bande tricolore */}
