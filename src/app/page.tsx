@@ -169,39 +169,32 @@ export default function HomePage() {
       </section>
 
       {/* Fonctionnalités clés */}
-      <section className="mx-auto max-w-5xl px-6 pb-8 pt-20">
+      <section className="mx-auto max-w-5xl px-6 pb-14 pt-20">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-rdc-blue-500">Le portail en bref</p><h2 className="mt-2 text-2xl font-bold text-rdc-blue-950">Un accès simple au droit congolais</h2></div>
+          <Link href="/sections" className="hidden items-center gap-1 text-xs font-semibold text-rdc-blue-700 hover:text-rdc-blue-900 sm:flex">Explorer <ArrowRight className="h-3.5 w-3.5" /></Link>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { icon: BookOpen, title: "Texte officiel", text: "Consultez les 229 articles et les 8 titres." },
             { icon: Sparkles, title: "Explications simples", text: "Comprenez les notions juridiques plus facilement." },
             { icon: MessageCircle, title: "Assistant Constitution", text: "Posez vos questions sur le droit congolais." },
             { icon: Landmark, title: "Institutions", text: "Explorez les pouvoirs et leur organisation." },
-          ].map((item) => <div key={item.title} className="rounded-xl border border-rdc-blue-100 bg-white p-5"><item.icon className="mb-4 h-5 w-5 text-rdc-blue-700" /><h2 className="mb-1 text-sm font-bold text-rdc-blue-950">{item.title}</h2><p className="text-xs leading-relaxed text-rdc-blue-500">{item.text}</p></div>)}
+          ].map((item) => <div key={item.title} className="group rounded-2xl border border-rdc-blue-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-rdc-blue-200 hover:shadow-md"><div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-rdc-blue-50 group-hover:bg-rdc-blue-100"><item.icon className="h-5 w-5 text-rdc-blue-700" /></div><h2 className="mb-1 text-sm font-bold text-rdc-blue-950">{item.title}</h2><p className="text-xs leading-relaxed text-rdc-blue-500">{item.text}</p></div>)}
         </div>
       </section>
 
       {/* Préambule */}
-      <section className="max-w-3xl mx-auto px-6 py-16">
+      <section className="mx-auto max-w-5xl px-6 py-10">
         <div className="relative">
           {/* Guillemet décoratif */}
           <div className="absolute -top-6 -left-2 text-5xl text-rdc-blue-200 font-serif leading-none select-none">
             &ldquo;
           </div>
 
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-rdc-blue-500 mb-4 ml-2">
-            Préambule
-          </h2>
-          <div className="bg-rdc-blue-50/50 border border-rdc-blue-100 rounded-2xl p-6 md:p-8">
-            <p className="text-sm md:text-base text-rdc-blue-900 leading-relaxed font-serif italic">
-              {ready ? getPreambleSummary() : ""}
-            </p>
-            <button
-              onClick={() => setShowPreamble(true)}
-              className="inline-flex items-center gap-1 mt-4 text-xs font-medium text-rdc-blue-700 hover:text-rdc-blue-900 transition-colors"
-            >
-              Lire la suite
-              <ChevronRight className="h-3 w-3" />
-            </button>
+          <div className="grid gap-6 rounded-3xl border border-rdc-blue-100 bg-rdc-blue-50/45 p-6 md:grid-cols-[0.8fr_1.6fr] md:items-center md:p-9">
+            <div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-rdc-blue-500">Le texte fondateur</p><h2 className="mt-2 text-2xl font-bold text-rdc-blue-950">Le Préambule</h2><p className="mt-3 text-xs leading-relaxed text-rdc-blue-600">Les valeurs et engagements qui ouvrent la Constitution.</p><button onClick={() => setShowPreamble(true)} className="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-rdc-blue-700 hover:text-rdc-blue-950">Lire le texte intégral <ChevronRight className="h-3.5 w-3.5" /></button></div>
+            <div className="rounded-2xl border border-white/80 bg-white/80 p-5 shadow-sm md:p-7"><p className="text-sm leading-relaxed text-rdc-blue-900 md:text-base md:leading-loose">{ready ? getPreambleSummary() : ""}</p></div>
           </div>
 
           {/* Modale Préambule */}
@@ -338,9 +331,10 @@ export default function HomePage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {themes.map((theme) => (
-              <div
+              <Link
                 key={theme.title}
-                className="p-6 rounded-xl border border-rdc-blue-100 bg-white hover:shadow-md transition-all group cursor-pointer"
+                href={`/recherche?q=${encodeURIComponent(theme.title)}`}
+                className="group rounded-2xl border border-rdc-blue-100 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-rdc-blue-300 hover:shadow-md"
               >
                 <div
                   className={cn(
@@ -356,18 +350,21 @@ export default function HomePage() {
                 <p className="text-xs text-rdc-blue-500 leading-relaxed">
                   {theme.description}
                 </p>
-              </div>
+                <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-semibold text-rdc-blue-600 opacity-0 transition-opacity group-hover:opacity-100">Explorer <ArrowRight className="h-3 w-3" /></span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="max-w-3xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-2xl font-bold text-rdc-blue-950 mb-3">
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <div className="overflow-hidden rounded-3xl bg-hero-pattern px-6 py-12 text-center md:px-12">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rdc-yellow-300">Votre portail citoyen</p>
+        <h2 className="mt-3 text-2xl font-bold text-white md:text-3xl">
           La Constitution, pour chaque Congolais
         </h2>
-        <p className="text-sm text-rdc-blue-500 mb-8 max-w-lg mx-auto">
+        <p className="mx-auto mb-8 mt-3 max-w-lg text-sm text-white/70">
           Un outil libre, gratuit et accessible à tous pour connaître et
           comprendre la loi fondamentale de notre pays.
         </p>
@@ -380,7 +377,7 @@ export default function HomePage() {
             </Button>
           </Link>
           <Link href="/recherche">
-            <Button variant="outline" size="lg" className="gap-2">
+            <Button variant="outline" size="lg" className="gap-2 border-white/40 bg-white/10 text-white hover:bg-white/20">
               <Search className="h-5 w-5" />
               Rechercher
             </Button>
@@ -388,10 +385,11 @@ export default function HomePage() {
         </div>
 
         {/* Bandeau tricolore */}
-        <div className="mt-12 h-1.5 w-full max-w-xs mx-auto rounded-full flex overflow-hidden">
+        <div className="mx-auto mt-10 flex h-1.5 w-full max-w-xs overflow-hidden rounded-full">
           <div className="flex-1 bg-rdc-blue-700" />
           <div className="flex-1 bg-rdc-yellow-500" />
           <div className="flex-1 bg-rdc-red-500" />
+        </div>
         </div>
       </section>
 

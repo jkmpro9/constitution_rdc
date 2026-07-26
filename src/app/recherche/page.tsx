@@ -171,11 +171,13 @@ function SearchContent() {
 
   // Filtrer par mode
   const filteredResults = useMemo(() => {
-    if (searchMode === "article") return results.filter((r) => r.type === "article");
-    if (searchMode === "titre") return results.filter((r) => r.type === "titre");
-    if (searchMode === "keyword") return results.filter((r) => r.type === "keyword");
-    return results;
-  }, [results, searchMode]);
+    let filtered = results;
+    if (searchMode === "article") filtered = filtered.filter((r) => r.type === "article");
+    if (searchMode === "titre") filtered = filtered.filter((r) => r.type === "titre");
+    if (searchMode === "keyword") filtered = filtered.filter((r) => r.type === "keyword");
+    if (filterTitre !== null) filtered = filtered.filter((r) => r.titre?.numero === filterTitre);
+    return filtered;
+  }, [results, searchMode, filterTitre]);
 
   const hasDirectMatch = results.some((r) => r.type === "article" || r.type === "titre");
 

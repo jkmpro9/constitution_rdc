@@ -158,7 +158,8 @@ function normalize(text: string): string {
   return text
     .toLowerCase()
     .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’‘`]/g, "'");
 }
 
 /**
@@ -167,10 +168,11 @@ function normalize(text: string): string {
 function matchesQuery(article: Article, normalizedQuery: string): boolean {
   const normalizedTexte = normalize(article.texte);
   const normalizedContenu = normalize(article.contenu);
-  return (
-    normalizedTexte.includes(normalizedQuery) ||
-    normalizedContenu.includes(normalizedQuery)
-  );
+  const searchableText = `${normalizedTexte} ${normalizedContenu}`;
+  const terms = normalizedQuery
+    .split(/[^a-z0-9]+/i)
+    .filter((term) => term.length > 1);
+  return terms.every((term) => searchableText.includes(term));
 }
 
 /**
