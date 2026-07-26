@@ -33,6 +33,8 @@ export interface ConstitutionData {
 }
 
 let cachedData: ConstitutionData | null = null;
+let loadingPromise: Promise<ConstitutionData> | null = null;
+const DATA_CACHE_KEY = "constitution-rdc:data:v1";
 
 /**
  * Charge et parse le fichier JSON de la Constitution depuis `/data.json`.
@@ -43,17 +45,49 @@ export async function getData(): Promise<ConstitutionData> {
     return cachedData;
   }
 
-  const response = await fetch("/data.json");
-
-  if (!response.ok) {
-    throw new Error(
-      `Impossible de charger la Constitution: ${response.status} ${response.statusText}`,
-    );
+  if (typeof window !== "undefined") {
+    try {
+      const stored = window.sessionStorage.getItem(DATA_CACHE_KEY);
+      if (stored) {
+        cachedData = JSON.parse(stored) as ConstitutionData;
+        return cachedData;
+      }
+    } catch {
+      // Storage can be unavailable in private browsing; continue with fetch.
+    }
   }
 
-  const data: ConstitutionData = await response.json();
-  cachedData = data;
-  return data;
+  if (loadingPromise) return loadingPromise;
+
+  loadingPromise = fetch("/data.json", { cache: "force-cache" })
+    .then(async (response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Impossible de charger la Constitution: ${response.status} ${response.statusText}`,
+        );
+      }
+
+      const data: ConstitutionData = await response.json();
+      cachedData = data;
+      if (typeof window !== "undefined") {
+        try {
+          window.sessionStorage.setItem(DATA_CACHE_KEY, JSON.stringify(data));
+        } catch {
+          // Ignore storage quota/private-mode errors.
+        }
+      }
+      return data;
+    })
+    .finally(() => {
+      loadingPromise = null;
+    });
+
+  return loadingPromise;
+}
+
+/** Lance le chargement en arrière-plan sans bloquer l'interface. */
+export function preloadData(): void {
+  void getData().catch(() => undefined);
 }
 
 /**

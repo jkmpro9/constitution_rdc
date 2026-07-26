@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getTitres, romanNumeral } from "@/lib/constitution";
+import { getTitres, preloadData, romanNumeral } from "@/lib/constitution";
 import type { Titre } from "@/lib/constitution";
 import {
   BookOpen,
@@ -34,6 +34,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    preloadData();
     getTitres()
       .then(setToc)
       .catch(console.error);
