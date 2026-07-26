@@ -35,7 +35,9 @@ export default function Header({ onToggleAssistant, sidebarOpen, onToggleSidebar
           <button
             onClick={onToggleSidebar}
             className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-rdc-blue-50 text-rdc-blue-700"
-            aria-label="Menu"
+            aria-label={sidebarOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={sidebarOpen}
+            aria-controls="mobile-navigation"
           >
             {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -46,9 +48,9 @@ export default function Header({ onToggleAssistant, sidebarOpen, onToggleSidebar
               <Star className="h-4 w-4 text-rdc-yellow-400 fill-rdc-yellow-400" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-sm font-bold text-rdc-blue-950 leading-tight">
+              <span className="block text-sm font-bold text-rdc-blue-950 leading-tight">
                 Constitution RDC
-              </h1>
+              </span>
               <p className="text-[10px] text-rdc-blue-500 leading-tight">
                 République Démocratique du Congo
               </p>

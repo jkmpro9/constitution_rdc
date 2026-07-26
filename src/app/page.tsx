@@ -36,6 +36,19 @@ export default function HomePage() {
       .catch(console.error);
   }, []);
 
+  useEffect(() => {
+    if (!showPreamble) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setShowPreamble(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow = "";
+    };
+  }, [showPreamble]);
+
   const themes = [
     {
       icon: Scale,
@@ -168,7 +181,7 @@ export default function HomePage() {
 
           {/* Modale Préambule */}
           {showPreamble && (
-            <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="preambule-title">
               {/* Overlay */}
               <div
                 className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -177,12 +190,13 @@ export default function HomePage() {
               {/* Contenu */}
               <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-rdc-blue-100 animate-slide-up">
                 <div className="sticky top-0 bg-white z-10 flex items-center justify-between px-6 py-4 border-b border-rdc-blue-100 rounded-t-2xl">
-                  <h3 className="text-sm font-semibold text-rdc-blue-950 uppercase tracking-wider">
+                  <h3 id="preambule-title" className="text-sm font-semibold text-rdc-blue-950 uppercase tracking-wider">
                     Préambule
                   </h3>
                   <button
                     onClick={() => setShowPreamble(false)}
                     className="p-1.5 rounded-lg hover:bg-rdc-blue-50 transition-colors text-rdc-blue-500 hover:text-rdc-blue-700"
+                    aria-label="Fermer le préambule"
                   >
                     <X className="h-4 w-4" />
                   </button>

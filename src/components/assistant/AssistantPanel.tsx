@@ -135,7 +135,7 @@ export default function AssistantPanel({
 
       {/* Panneau de chat */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white rounded-2xl shadow-2xl border border-rdc-blue-200 overflow-hidden flex flex-col animate-slide-up max-h-[75vh]">
+        <div className="fixed bottom-24 right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white rounded-2xl shadow-2xl border border-rdc-blue-200 overflow-hidden flex flex-col animate-slide-up max-h-[75vh]" role="dialog" aria-modal="true" aria-label="Assistant Constitution">
           {/* Header */}
           <div className="shrink-0 flex items-center justify-between px-5 py-4 bg-gradient-to-r from-rdc-blue-700 to-rdc-blue-800 text-white">
             <div className="flex items-center gap-3">
@@ -152,13 +152,14 @@ export default function AssistantPanel({
             <button
               onClick={() => setIsOpen(false)}
               className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Fermer l’assistant"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 min-h-[300px] max-h-[400px] bg-rdc-blue-50/20">
+          <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 min-h-[300px] max-h-[400px] bg-rdc-blue-50/20" aria-live="polite" aria-busy={isLoading}>
             {messages.map((msg, i) => (
               <div
                 key={i}
@@ -235,6 +236,7 @@ export default function AssistantPanel({
               type="submit"
               disabled={!input.trim() || isLoading}
               className="p-2.5 rounded-xl bg-rdc-blue-700 text-white hover:bg-rdc-blue-800 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-sm shrink-0"
+              aria-label="Envoyer le message"
             >
               <Send className="h-4 w-4" />
             </button>
