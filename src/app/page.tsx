@@ -16,6 +16,9 @@ import {
   Gavel,
   ScrollText,
   X,
+  Landmark,
+  MessageCircle,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -84,75 +87,97 @@ export default function HomePage() {
     },
   ];
 
+  const quickTopics = [
+    { label: "Liberté d’expression", query: "liberté d'expression" },
+    { label: "Article 218", query: "218" },
+    { label: "Le Parlement", query: "Parlement" },
+    { label: "Référendum", query: "référendum" },
+  ];
+
   return (
     <div>
-      {/* Hero Section */}
+      {/* Hero éditorial V2 */}
       <section className="relative overflow-hidden bg-hero-pattern">
-        {/* Motif étoilé */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-2 h-2 bg-rdc-yellow-400 rounded-full" />
-          <div className="absolute top-40 right-20 w-1.5 h-1.5 bg-rdc-yellow-400 rounded-full" />
-          <div className="absolute bottom-32 left-1/4 w-2 h-2 bg-rdc-yellow-400 rounded-full" />
-          <div className="absolute top-60 right-1/3 w-1 h-1 bg-rdc-yellow-400 rounded-full" />
-          <div className="absolute bottom-20 right-1/4 w-1.5 h-1.5 bg-rdc-yellow-400 rounded-full" />
-        </div>
-
-        <div className="relative max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
-          {/* Bande drapeau */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm mb-8 border border-white/20">
-            <div className="flex gap-1">
-              <div className="w-2 h-2 rounded-full bg-rdc-blue-300" />
-              <div className="w-2 h-2 rounded-full bg-rdc-yellow-400" />
-              <div className="w-2 h-2 rounded-full bg-rdc-red-400" />
+        <div className="absolute -right-24 top-10 h-72 w-72 rounded-full border border-white/10 bg-white/5" />
+        <div className="absolute -bottom-36 -left-20 h-80 w-80 rounded-full border border-rdc-yellow-400/20 bg-rdc-yellow-400/5" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1.1fr_0.9fr] md:py-24">
+          <div>
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80">
+              <span className="h-2 w-2 rounded-full bg-rdc-yellow-400" />
+              Portail citoyen de la RDC
             </div>
-            <span className="text-[11px] font-medium text-white/80">
-              République Démocratique du Congo
-            </span>
+            <h1 className="max-w-3xl text-4xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl">
+              Comprendre la Constitution
+              <span className="block text-rdc-yellow-400">de la RDC.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg">
+              Le texte officiel, les articles et les explications pour connaître
+              ses droits et comprendre les institutions de la République.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/sections">
+                <Button size="lg" className="w-full gap-2 bg-rdc-yellow-500 font-semibold text-rdc-blue-950 shadow-lg shadow-rdc-yellow-500/25 hover:bg-rdc-yellow-400 sm:w-auto">
+                  <BookOpen className="h-5 w-5" /> Lire la Constitution
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link href="/recherche">
+                <Button size="lg" variant="outline" className="w-full gap-2 border-white/40 bg-white/10 font-medium text-white hover:bg-white/20 sm:w-auto">
+                  <Search className="h-5 w-5" /> Rechercher un article
+                </Button>
+              </Link>
+            </div>
+            <p className="mt-5 text-xs text-white/55">Libre et gratuit · Version modifiée par la Loi n° 11/002 du 20 janvier 2011</p>
           </div>
-
-          {/* Titre */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight animate-fade-in">
-            Constitution de la
-            <br />
-            <span className="text-rdc-yellow-400">République Démocratique</span>
-            <br />
-            du Congo
-          </h1>
-
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-3 animate-slide-up">
-            La loi fondamentale, accessible à tous.
-          </p>
-          <p className="text-sm text-white/50 mb-10">
-            Modifiée par la Loi n° 11/002 du 20 janvier 2011
-          </p>
-
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up">
-            <Link href="/sections">
-              <Button
-                size="lg"
-                className="bg-rdc-yellow-500 text-rdc-blue-950 hover:bg-rdc-yellow-400 font-semibold shadow-lg shadow-rdc-yellow-500/25 gap-2"
-              >
-                <BookOpen className="h-5 w-5" />
-                Lire la Constitution
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/recherche">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-rdc-blue-700/50 bg-rdc-blue-800/40 text-rdc-yellow-300 hover:bg-rdc-blue-800/60 hover:text-rdc-yellow-200 backdrop-blur-sm gap-2 font-medium"
-              >
-                <Search className="h-5 w-5" />
-                Rechercher un article
-              </Button>
-            </Link>
+          <div className="relative hidden md:block">
+            <div className="relative mx-auto max-w-sm rotate-2 rounded-2xl border border-white/20 bg-[#f7f2e8] p-5 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-rdc-blue-950/15 pb-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-rdc-blue-700 text-rdc-yellow-400"><BookOpen className="h-4 w-4" /></div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-rdc-blue-950">Constitution RDC</span>
+                </div>
+                <span className="text-[10px] text-rdc-blue-500">2011</span>
+              </div>
+              <div className="py-10 text-center">
+                <Landmark className="mx-auto mb-5 h-20 w-20 text-rdc-blue-700/80" strokeWidth={1} />
+                <p className="font-serif text-2xl font-bold text-rdc-blue-950">Le droit de savoir.</p>
+                <p className="mt-2 text-xs uppercase tracking-[0.2em] text-rdc-blue-500">Lire · Comprendre · Participer</p>
+              </div>
+              <div className="grid grid-cols-3 border-t border-rdc-blue-950/15 pt-4 text-center text-[10px] font-semibold uppercase tracking-wider text-rdc-blue-700">
+                <span>8 titres</span><span>229 articles</span><span>Recherche</span>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Wave separator */}
-        <div className="relative h-16 bg-gradient-to-t from-white to-transparent" />
+      {/* Recherche par intention */}
+      <section className="relative z-10 mx-auto -mt-8 max-w-4xl px-6">
+        <div className="rounded-2xl border border-rdc-blue-100 bg-white p-5 shadow-xl shadow-rdc-blue-950/10 md:p-7">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rdc-blue-100"><Search className="h-4 w-4 text-rdc-blue-700" /></div>
+            <div><h2 className="text-base font-bold text-rdc-blue-950">Que souhaitez-vous comprendre ?</h2><p className="text-xs text-rdc-blue-500">Recherchez un article, un thème ou une institution.</p></div>
+          </div>
+          <form action="/recherche" className="flex gap-2">
+            <input name="q" aria-label="Rechercher dans la Constitution" placeholder="Ex. liberté d'expression, article 218..." className="h-11 min-w-0 flex-1 rounded-xl border border-rdc-blue-200 bg-rdc-blue-50/40 px-4 text-sm text-rdc-blue-950 outline-none transition focus:border-rdc-blue-500 focus:ring-2 focus:ring-rdc-blue-500/20" />
+            <Button type="submit" className="h-11 gap-2 px-4"><Search className="h-4 w-4" /><span className="hidden sm:inline">Rechercher</span></Button>
+          </form>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {quickTopics.map((topic) => <Link key={topic.query} href={`/recherche?q=${encodeURIComponent(topic.query)}`} className="rounded-full border border-rdc-blue-100 bg-rdc-blue-50 px-3 py-1.5 text-xs text-rdc-blue-700 transition hover:border-rdc-blue-300 hover:bg-rdc-blue-100">{topic.label}</Link>)}
+          </div>
+        </div>
+      </section>
+
+      {/* Fonctionnalités clés */}
+      <section className="mx-auto max-w-5xl px-6 pb-8 pt-20">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: BookOpen, title: "Texte officiel", text: "Consultez les 229 articles et les 8 titres." },
+            { icon: Sparkles, title: "Explications simples", text: "Comprenez les notions juridiques plus facilement." },
+            { icon: MessageCircle, title: "Assistant Constitution", text: "Posez vos questions sur le droit congolais." },
+            { icon: Landmark, title: "Institutions", text: "Explorez les pouvoirs et leur organisation." },
+          ].map((item) => <div key={item.title} className="rounded-xl border border-rdc-blue-100 bg-white p-5"><item.icon className="mb-4 h-5 w-5 text-rdc-blue-700" /><h2 className="mb-1 text-sm font-bold text-rdc-blue-950">{item.title}</h2><p className="text-xs leading-relaxed text-rdc-blue-500">{item.text}</p></div>)}
+        </div>
       </section>
 
       {/* Préambule */}
