@@ -62,7 +62,7 @@ export default function TitrePage() {
   const allArticles = flattenArticles(titre);
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
       {/* Fil d'Ariane */}
       <nav className="flex items-center gap-1.5 text-xs text-rdc-blue-500 mb-6">
         <Link
@@ -100,16 +100,17 @@ export default function TitrePage() {
       </div>
 
       {/* Raccourcis : Liste compacte des articles */}
-      <div className="mb-10">
-        <h2 className="text-sm font-semibold text-rdc-blue-700 mb-3">
-          Raccourcis vers les articles
-        </h2>
-        <div className="flex flex-wrap gap-1.5">
+      <div className="mb-8 rounded-2xl border border-rdc-blue-100 bg-rdc-blue-50/40 p-4 sm:p-5">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h2 className="text-sm font-semibold text-rdc-blue-700">Raccourcis vers les articles</h2>
+          <span className="text-[10px] text-rdc-blue-400">{allArticles.length} disponibles</span>
+        </div>
+        <div className="grid grid-cols-5 gap-2 sm:flex sm:flex-wrap">
           {allArticles.map((article) => (
             <Link
               key={article.numero}
               href={`/articles/${article.numero}`}
-              className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-rdc-blue-50 text-rdc-blue-700 hover:bg-rdc-blue-100 hover:text-rdc-blue-900 transition-colors border border-rdc-blue-100"
+              className="inline-flex min-h-9 items-center justify-center rounded-lg border border-rdc-blue-100 bg-white px-2 text-xs font-medium text-rdc-blue-700 transition-colors hover:bg-rdc-blue-100 hover:text-rdc-blue-900"
             >
               Art. {article.numero}
             </Link>
@@ -130,7 +131,7 @@ export default function TitrePage() {
           if (isEmpty) return null;
 
           return (
-            <div key={chapitre.numero} className="border border-rdc-blue-100 rounded-2xl overflow-hidden">
+            <div key={chapitre.numero} id={`ch-${chapitre.numero}`} className="overflow-hidden rounded-2xl border border-rdc-blue-100">
               {/* En-tête du chapitre */}
               {!isUnnamed && (
                 <div className="px-5 py-3 bg-rdc-blue-50/50 border-b border-rdc-blue-100">
@@ -240,7 +241,7 @@ function ArticleLink({
   return (
     <Link
       href={`/articles/${article.numero}`}
-      className="flex items-start gap-3 px-5 py-3 hover:bg-rdc-blue-50/50 transition-colors group"
+      className="group flex items-start gap-3 px-4 py-4 transition-colors hover:bg-rdc-blue-50/50 sm:px-5"
     >
       <div className="w-8 h-8 rounded-lg bg-rdc-blue-100 flex items-center justify-center shrink-0 group-hover:bg-rdc-blue-200 transition-colors mt-0.5">
         <FileText className="h-4 w-4 text-rdc-blue-700" />
@@ -254,26 +255,9 @@ function ArticleLink({
             {article.texte}
           </p>
         )}
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-[10px] text-rdc-blue-400">
-            Titre {romanNumeral(titre.numero)}
-          </span>
-          {chapitre.nom && (
-            <>
-              <span className="text-[10px] text-rdc-blue-300">·</span>
-              <span className="text-[10px] text-rdc-blue-400">
-                {chapitre.nom}
-              </span>
-            </>
-          )}
-          {section && section.nom && (
-            <>
-              <span className="text-[10px] text-rdc-blue-300">·</span>
-              <span className="text-[10px] text-rdc-blue-400">
-                {section.nom}
-              </span>
-            </>
-          )}
+        <div className="mt-1 flex min-w-0 items-center gap-1.5 text-[10px] text-rdc-blue-400">
+          <span className="shrink-0">Titre {romanNumeral(titre.numero)}</span>
+          {section?.nom || chapitre.nom ? <span className="truncate">· {section?.nom || chapitre.nom}</span> : null}
         </div>
       </div>
       <ChevronLeft className="h-4 w-4 text-rdc-blue-300 rotate-180 shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />

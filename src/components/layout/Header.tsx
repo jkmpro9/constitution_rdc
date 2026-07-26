@@ -47,11 +47,11 @@ export default function Header({ onToggleAssistant, sidebarOpen, onToggleSidebar
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-rdc-blue-700 group-hover:bg-rdc-blue-800 transition-colors">
               <Star className="h-4 w-4 text-rdc-yellow-400 fill-rdc-yellow-400" />
             </div>
-            <div className="hidden sm:block">
+            <div className="block min-w-0">
               <span className="block text-sm font-bold text-rdc-blue-950 leading-tight">
                 Constitution RDC
               </span>
-              <p className="text-[10px] text-rdc-blue-500 leading-tight">
+              <p className="hidden text-[10px] text-rdc-blue-500 leading-tight sm:block">
                 République Démocratique du Congo
               </p>
             </div>

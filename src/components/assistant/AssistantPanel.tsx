@@ -123,7 +123,7 @@ export default function AssistantPanel({
       {/* Bubble flottante */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-rdc-blue-700 text-white shadow-lg shadow-rdc-blue-700/30 hover:bg-rdc-blue-800 transition-all hover:scale-105 flex items-center justify-center"
+        className="fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-rdc-blue-700 text-white shadow-lg shadow-rdc-blue-700/30 transition-all hover:scale-105 hover:bg-rdc-blue-800 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14"
         aria-label="Assistant Constitution"
       >
         {isOpen ? (
@@ -135,7 +135,7 @@ export default function AssistantPanel({
 
       {/* Panneau de chat */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white rounded-2xl shadow-2xl border border-rdc-blue-200 overflow-hidden flex flex-col animate-slide-up max-h-[75vh]" role="dialog" aria-modal="true" aria-label="Assistant Constitution">
+        <div className="fixed bottom-20 right-2 z-50 flex max-h-[75vh] w-[calc(100vw-1rem)] flex-col overflow-hidden rounded-2xl border border-rdc-blue-200 bg-white shadow-2xl animate-slide-up sm:bottom-24 sm:right-6 sm:w-96" role="dialog" aria-modal="true" aria-label="Assistant Constitution">
           {/* Header */}
           <div className="shrink-0 flex items-center justify-between px-5 py-4 bg-gradient-to-r from-rdc-blue-700 to-rdc-blue-800 text-white">
             <div className="flex items-center gap-3">

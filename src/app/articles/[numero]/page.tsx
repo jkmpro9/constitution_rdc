@@ -179,8 +179,8 @@ export default function ArticlePage() {
         ogImage="/favicon.svg"
       />
       {/* Fil d'Ariane complet et cliquable */}
-      <div className="px-4 sm:px-6 pt-6 pb-0">
-        <nav className="flex items-center gap-1 text-xs text-rdc-blue-500 mb-4 flex-wrap">
+      <div className="px-4 pt-6 pb-0 sm:px-6">
+        <nav className="mb-4 flex items-center gap-1 text-xs text-rdc-blue-500">
           <Link
             href="/"
             className="hover:text-rdc-blue-700 transition-colors inline-flex items-center gap-1 shrink-0"
@@ -335,7 +335,7 @@ export default function ArticlePage() {
           </div>
 
           {/* Contenu de l'article */}
-          <div className="bg-white border border-rdc-blue-100 rounded-2xl p-6 md:p-8 shadow-sm">
+          <div className="rounded-2xl border border-rdc-blue-100 bg-white p-5 pb-24 shadow-sm sm:p-6 md:p-8 md:pb-24">
             <header className="mb-6">
               <h1 className="text-xl md:text-2xl font-bold text-rdc-blue-950">
                 Article {article.numero}
@@ -347,7 +347,7 @@ export default function ArticlePage() {
               )}
             </header>
 
-            <div className="prose prose-blue prose-sm md:prose-base text-rdc-blue-900 font-serif max-w-none text-justify md:text-[1.05rem]">
+            <div className="prose prose-blue max-w-none font-serif text-[1rem] leading-[1.85] text-rdc-blue-900 sm:text-justify md:text-[1.05rem]">
               {(() => {
                 const text = article.contenu;
                 
