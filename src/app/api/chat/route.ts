@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const OLLAMA_API_KEY = "7cd43d6cdb4849c5b139fe0bf830d9ed.177oYbFG8GgjSb-9qpS19YVE";
-const OLLAMA_API_URL = "https://ollama.com/v1/chat/completions";
+// API DeepSeek (OpenAI-compatible) — remplace Ollama Cloud dont l'accès
+// gratuit a été supprimé (HTTP 402/403 "requires a subscription").
+// La clé est injectée via la variable d'environnement DEEPSEEK_API_KEY
+// (configurée dans Easypanel) — jamais commitée dans le repo.
+const LLM_API_URL = "https://api.deepseek.com/chat/completions";
+const LLM_API_KEY = process.env.DEEPSEEK_API_KEY ?? "";
+const LLM_MODEL = "deepseek-v4-flash";
+
+const UNAVAILABLE_MESSAGE =
+  "😔 Désolé, l'assistant n'est pas disponible pour l'instant. Prière de revenir plus tard.";
 
 const SYSTEM_PROMPT = `Tu es un assistant spécialisé dans la Constitution de la République Démocratique du Congo.
 
@@ -31,14 +39,30 @@ export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
 
-    const response = await fetch(OLLAMA_API_URL, {
+    if (!LLM_API_KEY) {
+      console.error(
+        "Assistant API error: DEEPSEEK_API_KEY non définie (variable d'environnement manquante)"
+      );
+      return NextResponse.json(
+        {
+          choices: [
+            {
+              message: { role: "assistant", content: UNAVAILABLE_MESSAGE },
+            },
+          ],
+        },
+        { status: 200 }
+      );
+    }
+
+    const response = await fetch(LLM_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${OLLAMA_API_KEY}`,
+        Authorization: `Bearer ${LLM_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "deepseek-v4-flash:cloud",
+        model: LLM_MODEL,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...messages.slice(-10), // garder les 10 derniers messages
@@ -50,16 +74,12 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Ollama Cloud API error:", response.status, errorText);
+      console.error("LLM API error:", response.status, errorText);
       return NextResponse.json(
         {
           choices: [
             {
-              message: {
-                role: "assistant",
-                content:
-                  "😔 Désolé, l'assistant n'est pas disponible pour l'instant. Prière de revenir plus tard.",
-              },
+              message: { role: "assistant", content: UNAVAILABLE_MESSAGE },
             },
           ],
         },
@@ -77,8 +97,7 @@ export async function POST(request: NextRequest) {
           {
             message: {
               role: "assistant",
-              content:
-                "😔 Désolé, l'assistant n'est pas disponible pour l'instant. Prière de revenir plus tard.",
+              content: UNAVAILABLE_MESSAGE,
             },
           },
         ],
